@@ -1,0 +1,33 @@
+<h1>Items</h1>
+
+<%= form_tag(items_path, multipart: true, method: :get, class: 'form-inline', role: 'form') do %>
+  <div class="form-group">
+    <%= select_tag(:group_by, options_for_select([['Choose Sort Order', 'none'], ['status', 'status'], ['batch', 'batch']])) %>
+  </div>
+  <%= button_tag 'Sort', class: 'btn btn-primary' %>
+<% end %>
+
+<table class="table table-striped clearance_batches">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Size</th>
+      <th>Color</th>
+      <th>Status</th>
+      <th>Price Sold</th>
+      <th>Batch Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%- @items.each do |item| -%>
+      <tr>
+        <td><%= item.id %></td>
+        <td><%= item.size %></td>
+        <td><%= item.color %></td>
+        <td><%= item.status %></td>
+        <td><%= item.price_sold %></td>
+        <td><%= item.clearance_batch_id %></td>
+      </tr>
+    <%- end -%>
+  </tbody>
+</table>

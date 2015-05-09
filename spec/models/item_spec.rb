@@ -38,7 +38,7 @@ describe Item do
       expect(item.status).to eq('clearanced')
     end
 
-    context 'item is pants or a dress' do
+    context 'item is pants or dresses' do
       context 'pants at 75% wholesale are less than $5' do
         let(:wholesale_price) { 6 }
         let(:type)  { 'pants' }
@@ -50,16 +50,16 @@ describe Item do
 
       context 'dresses at 75% wholesale are less than $5' do
         let(:wholesale_price) { 6 }
-        let(:type) { 'dress' }
+        let(:type) { 'dresses' }
 
         it 'returns a minimum of $5' do
           expect(item.price_sold).to eq(BigDecimal.new('5'))
         end
       end
 
-      context 'pants/dress at 75% wholesale are more than $5' do
+      context 'pants/dresses at 75% wholesale are more than $5' do
         let(:wholesale_price) { 10 }
-        let(:type) { 'dress' }
+        let(:type) { 'dresses' }
 
         it 'returns 75% of wholesale value' do
           expect(item.price_sold).to eq(BigDecimal.new(wholesale_price) * BigDecimal.new("0.75"))
@@ -67,7 +67,7 @@ describe Item do
       end
     end
 
-    context 'item is not pants or a dress' do
+    context 'item is not pants or dresses' do
       context 'item at 75% wholesale are more than $2' do
         it "sets the price_sold as 75% of the wholesale_price" do
           expect(item.price_sold).to eq(BigDecimal.new(wholesale_price) * BigDecimal.new("0.75"))
@@ -76,7 +76,7 @@ describe Item do
 
       context 'item at 75% wholesale are less than $2' do
         let(:wholesale_price) { 2 }
-        let(:type) { 'shirt' }
+        let(:type) { 'shirts' }
 
         it "sets the price to $2" do
           expect(item.price_sold).to eq(2)

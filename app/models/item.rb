@@ -24,7 +24,7 @@ class Item < ActiveRecord::Base
   end
 
   def pants_or_dress?
-    style.type == 'pants' || style.type == 'dress'
+    style.type == 'pants' || style.type == 'dresses'
   end
 
   def price_with_minimum(price, minimum)

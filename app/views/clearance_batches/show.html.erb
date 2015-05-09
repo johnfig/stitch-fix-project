@@ -1,0 +1,26 @@
+<h2><% "Clearance Batch #{@clearance_batch.id} Items" %></h2>
+
+<table class="table table-striped clearance_batches">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Size</th>
+      <th>Color</th>
+      <th>Status</th>
+      <th>Price Sold</th>
+      <th>Batch Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%- @clearance_batch.items.each do |item| -%>
+      <tr>
+        <td><%= item.id %></td>
+        <td><%= item.size %></td>
+        <td><%= item.color %></td>
+        <td><%= item.status %></td>
+        <td><%= item.price_sold %></td>
+        <td><%= item.clearance_batch_id %></td>
+      </tr>
+    <%- end -%>
+  </tbody>
+</table>

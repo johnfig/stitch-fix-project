@@ -15,7 +15,8 @@ class Item < ActiveRecord::Base
   private
 
   def calculate_wholesale_price
-    wholesale_clearance_price < 5 && pants_or_dress? ? 5 : wholesale_clearance_price
+    price = wholesale_clearance_price
+    pants_or_dress? ? price_with_minimum(price, 5) : price_with_minimum(price, 2)
   end
 
   def wholesale_clearance_price
@@ -24,5 +25,9 @@ class Item < ActiveRecord::Base
 
   def pants_or_dress?
     style.type == 'pants' || style.type == 'dress'
+  end
+
+  def price_with_minimum(price, minimum)
+    price < minimum ? minimum : price
   end
 end

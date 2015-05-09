@@ -6,7 +6,7 @@ describe Item do
   it { should belong_to(:clearance_batch) }
 
   describe '#sellable' do
-    let!(:unsellable_item) { FactoryGirl.create :item, status: 'unsellable' }
+    let!(:unsellable_item) { FactoryGirl.create :item, status: 'not sellable' }
 
     context 'item is has status of `sellable`' do
       it 'returns an array of all sellable items' do
@@ -58,6 +58,9 @@ describe Item do
       end
 
       context 'pants/dress at 75% wholesale are more than $5' do
+        let(:wholesale_price) { 10 }
+        let(:type) { 'dress' }
+
         it 'returns 75% of wholesale value' do
           expect(item.price_sold).to eq(BigDecimal.new(wholesale_price) * BigDecimal.new("0.75"))
         end
@@ -65,8 +68,19 @@ describe Item do
     end
 
     context 'item is not pants or a dress' do
-      it "should set the price_sold as 75% of the wholesale_price" do
-        expect(item.price_sold).to eq(BigDecimal.new(wholesale_price) * BigDecimal.new("0.75"))
+      context 'item at 75% wholesale are more than $2' do
+        it "sets the price_sold as 75% of the wholesale_price" do
+          expect(item.price_sold).to eq(BigDecimal.new(wholesale_price) * BigDecimal.new("0.75"))
+        end
+      end
+
+      context 'item at 75% wholesale are less than $2' do
+        let(:wholesale_price) { 2 }
+        let(:type) { 'shirt' }
+
+        it "sets the price to $2" do
+          expect(item.price_sold).to eq(2)
+        end
       end
     end
   end

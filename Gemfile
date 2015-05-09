@@ -10,6 +10,7 @@ gem "bootstrap-sass"
 
 group :test, :development do
   gem "rspec-rails"
+  gem 'pry-debugger'
   gem "factory_girl_rails"
   gem "capybara"
   gem "database_cleaner", git: "git@github.com:bmabey/database_cleaner.git"

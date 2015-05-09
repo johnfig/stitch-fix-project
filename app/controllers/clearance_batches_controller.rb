@@ -1,7 +1,11 @@
 class ClearanceBatchesController < ApplicationController
 
   def index
-    @clearance_batches  = ClearanceBatch.all
+    @clearance_batches = ClearanceBatch.all
+  end
+
+  def show
+    @clearance_batch = ClearanceBatch.includes(:items).find(params[:id])
   end
 
   def create

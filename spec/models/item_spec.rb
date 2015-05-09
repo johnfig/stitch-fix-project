@@ -1,6 +1,28 @@
 require 'rails_helper'
 
 describe Item do
+
+  it { should belong_to(:style) }
+  it { should belong_to(:clearance_batch) }
+
+  describe '#sellable' do
+    let!(:unsellable_item) { FactoryGirl.create :item, status: 'unsellable' }
+
+    context 'item is has status of `sellable`' do
+      it 'returns an array of all sellable items' do
+        sellable_item_1 = FactoryGirl.create :item, status: 'sellable'
+        sellable_item_2 = FactoryGirl.create :item, status: 'sellable'
+        expect(described_class.sellable).to eq [sellable_item_1, sellable_item_2]
+      end
+    end
+
+    context 'items are unsellable' do
+      it 'returns an empty array' do
+        expect(described_class.sellable).to eq []
+      end
+    end
+  end
+
   describe "#clearance!" do
     let(:wholesale_price) { 100 }
     let(:type)  { 'pants' }

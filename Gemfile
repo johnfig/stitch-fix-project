@@ -10,6 +10,7 @@ gem "bootstrap-sass"
 
 group :test, :development do
   gem "rspec-rails"
+  gem 'shoulda-matchers'
   gem 'pry-debugger'
   gem "factory_girl_rails"
   gem "capybara"

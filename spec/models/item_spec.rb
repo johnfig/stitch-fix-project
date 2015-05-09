@@ -23,6 +23,32 @@ describe Item do
     end
   end
 
+  describe '#order_by_status' do
+    it 'returns an array of items grouped by status with newest items first' do
+      sellable_1 = FactoryGirl.create :item, status: 'sellable'
+      sold_1 =  FactoryGirl.create :item, status: 'sold'
+      sellable_2 = FactoryGirl.create :item, status: 'sellable'
+      sold_2     = FactoryGirl.create :item, status: 'sold'
+
+      expect(Item.order_by_status).to eq [sellable_2, sellable_1, sold_2, sold_1]
+    end
+  end
+
+  describe '#order_by_batch' do
+    let(:batch_1) { FactoryGirl.create :clearance_batch }
+    let(:batch_2) { FactoryGirl.create :clearance_batch }
+
+    it 'returns an array of items grouped by clearance_batch_id with newest items first' do
+      batch_1_item_1 = FactoryGirl.create :item, status: 'sellable', clearance_batch: batch_1
+      batch_2_item_1 =  FactoryGirl.create :item, status: 'sellable', clearance_batch: batch_2
+      batch_1_item_2 = FactoryGirl.create :item, status: 'sellable', clearance_batch: batch_1
+      batch_2_item_2 = FactoryGirl.create :item, status: 'sellable', clearance_batch: batch_2
+
+      result_array = [batch_2_item_2, batch_2_item_1, batch_1_item_2, batch_1_item_1]
+      expect(Item.order_by_batch).to eq result_array
+    end
+  end
+
   describe "#clearance!" do
     let(:wholesale_price) { 100 }
     let(:type)  { 'pants' }

@@ -5,7 +5,9 @@ class Item < ActiveRecord::Base
   belongs_to :style
   belongs_to :clearance_batch
 
-  scope :sellable, -> { where(status: 'sellable') }
+  scope :sellable,        -> { where(status: 'sellable') }
+  scope :order_by_status, -> { order(:status, created_at: :desc) }
+  scope :order_by_batch,  -> { order(clearance_batch_id: :desc, created_at: :desc) }
 
   def clearance!
     update_attributes!(status: 'clearanced',

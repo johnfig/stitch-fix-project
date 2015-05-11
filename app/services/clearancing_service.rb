@@ -19,6 +19,23 @@ class ClearancingService
     clearance_items!(clearancing_status)
   end
 
+  def process_text_field(string)
+    clearancing_status = create_clearancing_status
+    item_array = string.split(',').map { |id| id.to_i }
+
+    item_array.each do |potential_item_id|
+      clearancing_error = what_is_the_clearancing_error?(potential_item_id)
+
+      if clearancing_error
+        clearancing_status.errors << clearancing_error
+      else
+        clearancing_status.item_ids_to_clearance << potential_item_id
+      end
+    end
+
+    clearance_items!(clearancing_status)
+  end
+
   private
 
   def clearance_items!(clearancing_status)

@@ -1,13 +1,25 @@
 <h1>Stitch Fix Clearance Tool</h1>
 <h2>Clearance Batches</h2>
 
-<%= form_tag(clearance_batches_path, multipart: true, class: 'form-inline', role: 'form') do %>
+<%= form_tag(clearance_batches_path, multipart: true, class: 'file-upload-form form-inline', role: 'form') do %>
   <div class="form-group">
     <%= label_tag 'csv_batch_file', 'Select batch file' %>
     <%= file_field_tag 'csv_batch_file', class: 'form-control' %>
   </div>
   <%= button_tag 'upload batch file', class: 'btn btn-primary' %>
 <% end %>
+
+<br>
+
+<%= form_tag(clearance_batches_path, multipart: true, class: 'text-field-form form-inline', role: 'form') do %>
+  <div class="form-group">
+    <%= label_tag 'barcode_batch_string', "Scan Barcode ID's" %>
+    <%= text_field_tag 'barcode_batch_string' %>
+  </div>
+  <%= button_tag 'submit barcode ids', class: 'btn btn-primary' %>
+<% end %>
+
+<br>
 
 <table class="table table-striped clearance_batches">
   <thead>

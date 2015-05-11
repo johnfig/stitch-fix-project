@@ -14,6 +14,34 @@ describe 'clearance_batches/index.html.erb' do
     expect(page.find('h1').text).to eq 'Stitch Fix Clearance Tool'
   end
 
+  context 'file upload form' do
+    it 'submits to correct route' do
+      expect(page.find('form.file-upload-form')['action']).to eq '/clearance_batches'
+    end
+
+    it 'has form with file upload' do
+      expect(page.find('form.file-upload-form label').text).to eq 'Select batch file'
+    end
+
+    it 'has form with barcode text field' do
+      expect(page.find('form #csv_batch_file')).to be
+    end
+  end
+
+  context 'text field form' do
+    it 'submits to correct route' do
+      expect(page.find('form.text-field-form')['action']).to eq '/clearance_batches'
+    end
+
+    it 'has form with file upload' do
+      expect(page.find('form.text-field-form label').text).to eq "Scan Barcode ID's"
+    end
+
+    it 'has form with barcode text field' do
+      expect(page.find('form #barcode_batch_string')).to be
+    end
+  end
+
   it 'has table headers with item attributes' do
     table_headers.each do |header|
       expect(page.find('table thead')).to have_content header

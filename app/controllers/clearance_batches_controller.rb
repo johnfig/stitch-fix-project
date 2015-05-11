@@ -9,9 +9,16 @@ class ClearanceBatchesController < ApplicationController
   end
 
   def create
-    clearancing_status = ClearancingService.new.process_file(params[:csv_batch_file].tempfile)
-    clearance_batch    = clearancing_status.clearance_batch
-    alert_messages     = []
+    clearancing_status = process_clearance_batch
+    set_flash_message(clearancing_status)
+    redirect_to action: :index
+  end
+
+  private
+
+  def set_flash_message(clearancing_status)
+    clearance_batch = clearancing_status.clearance_batch
+    alert_messages  = []
 
     if clearance_batch.persisted?
       flash[:notice]  = "#{clearance_batch.items.count} items clearanced in batch #{clearance_batch.id}"
@@ -25,7 +32,15 @@ class ClearanceBatchesController < ApplicationController
     end
 
     flash[:alert] = alert_messages.join("<br/>") if alert_messages.any?
-    redirect_to action: :index
+  end
+
+
+  def process_clearance_batch
+    if params[:csv_batch_file].present?
+      return clearancing_status = ClearancingService.new.process_file(params[:csv_batch_file].tempfile)
+    elsif params[:barcode_batch_string].present?
+      return clearancing_status = ClearancingService.new.process_text_field(params[:barcode_batch_string])
+    end
   end
 end
 

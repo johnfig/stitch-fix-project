@@ -3,7 +3,7 @@ require 'csv'
 class ClearanceBatchReport
   def self.generate_report(clearance_batch)
     CSV.generate do |csv|
-      csv << ['ID', 'Size', 'Color', 'Status', 'Price Sold', 'Style ID', 'Clearance Batch Id', 'Sold At']
+      csv << ['ID', 'Size', 'Color', 'Status', 'Price Sold', 'Style ID', 'Clearance Batch ID', 'Sold At']
       clearance_batch.items.each do |item|
         csv << [
           item.id,

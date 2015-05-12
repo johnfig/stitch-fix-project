@@ -26,10 +26,19 @@ describe 'items/index.html.erb' do
   end
 
   def table_headers
-    ['ID', 'Size', 'Color', 'Status', 'Price Sold', 'Batch Number']
+    ['ID', 'Size', 'Color', 'Status', 'Price Sold', 'Style ID', 'Clearance Batch ID', 'Sold At']
   end
 
   def table_row(item)
-    [item.id, item.size, item.color, item.status, item.price_sold, item.clearance_batch_id]
+    [
+      item.id,
+      item.size,
+      item.color,
+      item.status,
+      item.price_sold,
+      item.style_id,
+      item.clearance_batch_id,
+      item.created_at
+    ]
   end
 end

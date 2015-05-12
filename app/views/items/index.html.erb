@@ -15,7 +15,9 @@
       <th>Color</th>
       <th>Status</th>
       <th>Price Sold</th>
-      <th>Batch Number</th>
+      <th>Style ID</th>
+      <th>Clearance Batch ID</th>
+      <th>Sold At</th>
     </tr>
   </thead>
   <tbody>
@@ -26,7 +28,9 @@
         <td><%= item.color %></td>
         <td><%= item.status %></td>
         <td><%= item.price_sold %></td>
+        <td><%= item.style_id %></td>
         <td><%= item.clearance_batch_id %></td>
+        <td><%= item.created_at %></td>
       </tr>
     <%- end -%>
   </tbody>

@@ -16,15 +16,24 @@ describe  ClearanceBatchesController do
 
   describe '#show' do
     let(:clearance_batch) { FactoryGirl.create :clearance_batch }
-    subject { get :show, id: clearance_batch.id }
+    let!(:item)            { FactoryGirl.create :item, clearance_batch: clearance_batch }
 
-    it 'renders the clearance_batch/show template' do
-      expect(subject).to render_template 'clearance_batches/show'
-    end
+    subject { get :show, id: clearance_batch.id, format: :csv }
 
     it 'returns a ClearanceBatch object' do
       subject
       expect(assigns(:clearance_batch)).to eq clearance_batch
+    end
+
+    it 'returns a ClearanceBatchReport with headers' do
+      subject
+      headers.each do |header|
+        expect(response.body).to include header
+      end
+    end
+
+    def headers
+      ['ID', 'Size', 'Color', 'Status', 'Price Sold', 'Sold At', 'Style ID', 'Clearance Batch Id', 'Sold At']
     end
   end
 

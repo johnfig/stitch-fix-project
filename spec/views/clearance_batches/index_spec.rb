@@ -42,27 +42,29 @@ describe 'clearance_batches/index.html.erb' do
     end
   end
 
-  it 'has table headers with item attributes' do
-    table_headers.each do |header|
-      expect(page.find('table thead')).to have_content header
+  context 'table' do
+    it 'has table headers with item attributes' do
+      table_headers.each do |header|
+        expect(page.find('table thead')).to have_content header
+      end
     end
-  end
 
-  it 'has table rows with correct data' do
-    table_row(item).each do |attributes|
-      expect(page.find('table tbody')).to have_content attributes
+    it 'has table rows with correct data' do
+      table_row(item).each do |attributes|
+        expect(page.find('table tbody')).to have_content attributes
+      end
     end
-  end
 
-  it 'has table rows with links to detailed clearance batch info' do
-    expect(page.find('tbody a')[:href]).to eq "/clearance_batches/#{clearance_batch.id}"
-  end
+    it 'has table rows with links to clearance batch info report' do
+      expect(page.find('tbody a')[:href]).to eq "/clearance_batches/#{clearance_batch.id}.csv"
+    end
 
-  def table_headers
-    ['', 'Date clearanced', 'Number of items clearanced']
-  end
+    def table_headers
+      ['', 'Date clearanced', 'Number of items clearanced', 'Download CSV']
+    end
 
-  def table_row(item)
-    ["Clearance Batch #{clearance_batch.id}", l(clearance_batch.created_at, format: :short), clearance_batch.items.count]
+    def table_row(item)
+      ["Clearance Batch #{clearance_batch.id}", l(clearance_batch.created_at, format: :short), clearance_batch.items.count, 'Download Batch Report']
+    end
   end
 end

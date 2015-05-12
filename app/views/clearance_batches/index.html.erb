@@ -24,17 +24,19 @@
 <table class="table table-striped clearance_batches">
   <thead>
     <tr>
-      <th></th>
+      <th>Batch</th>
       <th>Date clearanced</th>
       <th>Number of items clearanced</th>
+      <th>Download CSV</th>
     </tr>
   </thead>
   <tbody>
     <%- @clearance_batches.each do |clearance_batch| -%>
       <tr>
-        <td><%= link_to "Clearance Batch #{clearance_batch.id}", clearance_batch_path(clearance_batch.id) %></td>
+        <td><%= "Clearance Batch #{clearance_batch.id}" %></td>
         <td><%= l(clearance_batch.created_at, format: :short) %></td>
         <td><%= clearance_batch.items.count %></td>
+        <td><%= link_to "Download Batch Report", clearance_batch_path(id: clearance_batch.id, format: :csv) %></td>
       </tr>
     <%- end -%>
   </tbody>

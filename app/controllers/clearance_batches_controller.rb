@@ -36,9 +36,9 @@ class ClearanceBatchesController < ApplicationController
 
 
   def process_clearance_batch
-    if params[:csv_batch_file].present?
+    if params[:csv_batch_file]
       return clearancing_status = ClearancingService.new.process_file(params[:csv_batch_file].tempfile)
-    elsif params[:barcode_batch_string].present?
+    elsif params[:barcode_batch_string]
       return clearancing_status = ClearancingService.new.process_text_field(params[:barcode_batch_string])
     end
   end

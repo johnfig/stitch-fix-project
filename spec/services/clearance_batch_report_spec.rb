@@ -42,7 +42,7 @@ describe ClearanceBatchReport do
       'Price Sold',
       'Sold At',
       'Style ID',
-      'Clearance Batch Id',
+      'Clearance Batch ID',
       'Sold At'
     ]
   end

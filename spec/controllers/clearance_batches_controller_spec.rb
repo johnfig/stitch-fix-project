@@ -33,7 +33,7 @@ describe  ClearanceBatchesController do
     end
 
     def headers
-      ['ID', 'Size', 'Color', 'Status', 'Price Sold', 'Sold At', 'Style ID', 'Clearance Batch Id', 'Sold At']
+      ['ID', 'Size', 'Color', 'Status', 'Price Sold', 'Sold At', 'Style ID', 'Clearance Batch ID', 'Sold At']
     end
   end
 

@@ -150,6 +150,55 @@ describe "add new monthly clearance_batch" do
         end
       end
     end
+
+    describe 'download clearance batch csv report' do
+      let(:clearance_batch) { FactoryGirl.create(:clearance_batch) }
+      let!(:item) { FactoryGirl.create(:item, status: 'clearanced', clearance_batch: clearance_batch) }
+
+      it 'should be a clickable link that downloads the report' do
+        visit "/"
+
+        expect(page).to have_link 'Download Batch Report'
+
+        click_link 'Download Batch Report'
+        expect(page.response_headers['Content-Type']).to eq "text/csv; charset=utf-8"
+
+        header_columns.each do |header|
+          expect(page).to have_content header
+        end
+
+        item_attributes(item).each do |attributes|
+          expect(page).to have_content attributes
+        end
+      end
+
+      def item_attributes(item)
+        [
+          item.id,
+          item.size,
+          item.color,
+          item.status,
+          item.price_sold,
+          item.style_id,
+          item.clearance_batch_id,
+          item.created_at
+        ]
+      end
+
+      def header_columns
+        [
+          'ID',
+          'Size',
+          'Color',
+          'Status',
+          'Price Sold',
+          'Sold At',
+          'Style ID',
+          'Clearance Batch ID',
+          'Sold At'
+        ]
+      end
+    end
   end
 end
 

@@ -6,8 +6,8 @@ class ClearanceBatchesController < ApplicationController
 
   def show
     @clearance_batch = ClearanceBatch.includes(:items).find(params[:id])
+
     respond_to do |format|
-      format.html
       format.csv { render text: ClearanceBatchReport.generate_report(@clearance_batch) }
     end
   end
